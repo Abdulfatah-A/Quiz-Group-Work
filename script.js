@@ -80,18 +80,24 @@ function setNextQuestion() {
 }
 
 function showQuestion(question) {
-    console.log("Showing question:", question);
     const questionElement = document.getElementById('question');
-    questionElement.innerText = question.question; // Set question text
+    questionElement.innerText = question.question;
     question.answers.forEach(answer => {
-        const button = document.createElement('button');
-        button.innerText = answer.text; // Set answer text
-        button.classList.add('btn');
-        if (answer.correct) {
-            button.dataset.correct = answer.correct;
-        }
-        button.addEventListener('click', selectAnswer);
-        answerButtonsElement.appendChild(button); // Add button to answer container
+        const answerDiv = document.createElement('div');
+        answerDiv.classList.add('answer');
+
+        const radioButton = document.createElement('input');
+        radioButton.type = 'radio';
+        radioButton.name = 'answer';
+        radioButton.value = answer.text;
+        radioButton.dataset.correct = answer.correct;
+
+        const label = document.createElement('label');
+        label.innerText = answer.text;
+
+        answerDiv.appendChild(radioButton);
+        answerDiv.appendChild(label);
+        answerButtonsElement.appendChild(answerDiv);
     });
 }
 
@@ -123,6 +129,7 @@ function resetState() {
 function selectAnswer() {
     const selectedAnswer = document.querySelector('input[name="answer"]:checked');
 
+    // If no answer is selected, show an alert
     if (!selectedAnswer) {
         alert("Please select an answer before submitting!");
         return;
@@ -150,6 +157,7 @@ function selectAnswer() {
         showScore();
     }
 }
+
 
 function setStatusClass(element, correct) {
     clearStatusClass(element);
