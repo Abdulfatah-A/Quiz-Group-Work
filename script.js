@@ -67,7 +67,7 @@ function startTimer() {
         }
     }, 1000); // Repeat every second
 }
-javascript
+
 const scoreContainer = document.getElementById('score-container');
 
 // Function to show the final score
